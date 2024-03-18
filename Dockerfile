@@ -9,6 +9,8 @@ RUN apt-get update \
 
 COPY package*.json ./
 
+COPY .env ./
+
 RUN npm install
 
 COPY . .
