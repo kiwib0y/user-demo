@@ -20,8 +20,8 @@ const pool = new Pool({
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (res) => {
-  res.send(`
+app.get('/', (req, res) => {
+    res.send(`
     <h1>
       Hello World!
     </h1>
@@ -42,8 +42,8 @@ app.post('/emails', async (req, res) => {
 
   try {
     // Insert email into the database
-    const result = await pool.query('INSERT INTO emails (email) VALUES ($1) RETURNING *', [email]);
-    res.json(result.rows[0]);
+    await pool.query('INSERT INTO emails (email) VALUES ($1) RETURNING *', [email]);
+    res.redirect('/');
   } catch (error) {
     console.error('Error inserting email:', error);
     res.status(500).json({ error: 'An error occurred while processing your request' });
